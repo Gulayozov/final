@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import MealDetails from './pages/MealDetails';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Favorites from './pages/Favorites';
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/meal/:id" element={<MealDetails />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/favorites" element={<Favorites />} />
             </Routes>
         </Router>
     );

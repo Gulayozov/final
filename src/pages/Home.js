@@ -6,19 +6,16 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [category, setCategory] = useState('');
 
-    // Fetch meals based on category or random
     useEffect(() => {
         const fetchMeals = async () => {
             let url = '';
 
-            // If category is selected, fetch meals by category
             if (category && category !== 'Random') {
                 url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
             }
-            // If "Random" is selected, fetch multiple random meals
             else if (category === 'Random') {
                 const randomMeals = [];
-                for (let i = 0; i < 5; i++) { // Change 5 to the number of random meals you want
+                for (let i = 0; i < 9; i++) {
                     const res = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
                     const data = await res.json();
                     if (data.meals) {
@@ -28,7 +25,6 @@ const Home = () => {
                 setMeals(randomMeals);
                 return;
             }
-            // Default: fetch all meals (if no category is selected)
             else {
                 url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
             }
