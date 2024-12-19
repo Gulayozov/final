@@ -6,16 +6,19 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [category, setCategory] = useState('');
 
+    // Fetch meals based on category or random
     useEffect(() => {
         const fetchMeals = async () => {
             let url = '';
 
+            // If category is selected, fetch meals by category
             if (category && category !== 'Random') {
                 url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
             }
+            // If "Random" is selected, fetch multiple random meals
             else if (category === 'Random') {
                 const randomMeals = [];
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 5; i++) { // Change 5 to the number of random meals you want
                     const res = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
                     const data = await res.json();
                     if (data.meals) {
@@ -25,6 +28,7 @@ const Home = () => {
                 setMeals(randomMeals);
                 return;
             }
+            // Default: fetch all meals (if no category is selected)
             else {
                 url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
             }
@@ -45,31 +49,31 @@ const Home = () => {
 
     return (
         <div className="container mt-5">
-            <h1>Meals List</h1>
-            <div className="d-flex mb-3">
+            <h1 className="text-center mb-4">Meals List</h1>
+            <div className="d-flex mb-3 justify-content-center">
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control w-50 me-2"
                     placeholder="Search meals..."
                     value={searchTerm}
                     onChange={handleSearch}
                 />
-                <select className="form-select ms-2" onChange={(e) => setCategory(e.target.value)} value={category}>
+                <select className="form-select w-25" onChange={(e) => setCategory(e.target.value)} value={category}>
                     <option value="">All Categories</option>
                     <option value="Beef">Beef</option>
                     <option value="Chicken">Chicken</option>
                     <option value="Vegetarian">Vegetarian</option>
-                    <option value="Random">Random</option> {/* New category for Random */}
+                    <option value="Random">Random</option>
                 </select>
             </div>
             <div className="row">
                 {filteredMeals.map((meal) => (
-                    <div className="col-md-3 mb-4" key={meal.idMeal}>
-                        <div className="card">
+                    <div className="col-md-4 col-sm-6 mb-4" key={meal.idMeal}>
+                        <div className="card shadow-sm">
                             <img src={meal.strMealThumb} className="card-img-top" alt={meal.strMeal} />
                             <div className="card-body">
                                 <h5 className="card-title">{meal.strMeal}</h5>
-                                <Link to={`/meal/${meal.idMeal}`} className="btn btn-primary">
+                                <Link to={`/meal/${meal.idMeal}`} className="btn btn-primary w-100">
                                     View Details
                                 </Link>
                             </div>
