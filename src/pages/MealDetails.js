@@ -1,46 +1,41 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/MealDetails.js
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchMealById } from '../services/api';
 
 const MealDetails = () => {
     const { id } = useParams();
     const [meal, setMeal] = useState(null);
 
     useEffect(() => {
-        fetchMealById(id).then(setMeal);
+        const fetchMealDetails = async () => {
+            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+            const data = await res.json();
+            setMeal(data.meals[0]);
+        };
+        fetchMealDetails();
     }, [id]);
 
-    if (!meal) return <div className="text-center mt-5">Loading...</div>;
+    if (!meal) return <div>Loading...</div>;
 
     return (
-        <div className="container mt-4">
-            <h1 className="text-center mb-4">{meal.strMeal}</h1>
+        <div className="container mt-5">
+            <h1>{meal.strMeal}</h1>
             <div className="row">
                 <div className="col-md-6">
-                    <img
-                        src={meal.strMealThumb}
-                        alt={meal.strMeal}
-                        className="img-fluid rounded"
-                    />
+                    <img src={meal.strMealThumb} className="img-fluid" alt={meal.strMeal} />
                 </div>
                 <div className="col-md-6">
-                    <h4 className="mb-3">Instructions</h4>
-                    <p>{meal.strInstructions}</p>
-                    <h4 className="mb-3">Ingredients</h4>
-                    <ul className="list-group">
-                        {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => {
-                            const ingredient = meal[`strIngredient${num}`];
-                            const measure = meal[`strMeasure${num}`];
-                            if (ingredient && ingredient.trim()) {
-                                return (
-                                    <li key={num} className="list-group-item">
-                                        {ingredient} - {measure}
-                                    </li>
-                                );
-                            }
-                            return null;
-                        })}
+                    <h3>Ingredients</h3>
+                    <ul>
+                        {Object.keys(meal)
+                            .filter((key) => key.includes('strIngredient') && meal[key])
+                            .map((key, index) => (
+                                <li key={index}>{meal[key]}</li>
+                            ))}
                     </ul>
+                    <h3>Instructions</h3>
+                    <p>{meal.strInstructions}</p>
+                    <button className="btn btn-secondary">Save to Favorites</button>
                 </div>
             </div>
         </div>
