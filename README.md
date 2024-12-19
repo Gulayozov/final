@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+**Features Implemented:**
+Meal Categories: Users can view different categories of meals like Beef, Chicken, Vegetarian, and Random.
+Meal Details: Clicking on a meal shows detailed information, including the ingredients and recipe instructions.
+Favorites: Users can add meals to their favorites and later view or remove them as needed.
+Navigation: A navigation bar (Navbar) is used to easily navigate between the Home, About, Contact, and Favorite sections.
+Responsive Layout: The app is designed using Bootstrap to ensure it looks great on different screen sizes.
+
+**Future Enhancements:**
+Improve search functionality by adding filters or a search bar.
+Allow users to log in and save their favorites persistently.
+Add pagination or infinite scrolling for meal categories.
