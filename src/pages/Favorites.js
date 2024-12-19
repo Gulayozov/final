@@ -12,7 +12,11 @@ const Favorites = () => {
                 <div className="meal-list">
                     {favorites.map((meal) => (
                         <div key={meal.idMeal} className="meal-card">
-                            <img src={meal.strMealThumb} alt={meal.strMeal} />
+                            <img
+                                src={meal.strMealThumb}
+                                alt={meal.strMeal}
+                                className="meal-image"
+                            />
                             <h3>{meal.strMeal}</h3>
                             <button className="btn btn-danger" onClick={() => removeFromFavorites(meal.idMeal)}>
                                 Remove from Favorites
